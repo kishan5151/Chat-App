@@ -60,11 +60,11 @@ const registerUser=  asyncHandler(async(req,res)=>{
 
 const authUser=asyncHandler(async(req,res)=>{
     const {email, password} =req.body;
-    console.log(email,password);
+    // console.log(email,password);
 
     const user=await User.findOne({email});
 
-    console.log(user);
+    // console.log(user);
 
     if(user && (await user.comparePassword(password))){
         res.json({
@@ -88,7 +88,7 @@ const allUser=asyncHandler(async(req,res)=>{
             {email: {$regex : req.query.search, $options : "i"}},
         ]
     }:{};
-    // console.log(keyword);
+    console.log(keyword);
 
     const users= await User.find(keyword).find({_id: {$ne : req.user._id}});  //find use authantication because id is not now
     res.send(users);

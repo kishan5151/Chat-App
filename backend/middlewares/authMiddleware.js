@@ -8,13 +8,15 @@ const protect =asyncHandler(async (req,res,next)=>{
 
      if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")){
         try{
+            // console.log(req.headers.authorization.startsWith("Bearer"));
             token=req.headers.authorization.split(" ")[1];
 
             //decode token id
             const decoded =jwt.verify(token,process.env.JWT_SECRET);
-
+            // console.log(decoded);
             req.user = await User.findById(decoded.id).select("-password");
             next();
+            //console.log(req.user);
         }catch(error){
             res.status(401);
             throw new ApiError("401","Not authorized, token failed");

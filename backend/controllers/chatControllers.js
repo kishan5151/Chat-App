@@ -4,9 +4,7 @@ const Chat=require("../models/chat.models");
 const { ApiError } = require("../util/ApiError");
 
 const accessChat = asyncHandler(async (req, res) => {
- 
   const { userId } = req.body;
-  // console.log(req.user._id)
 
   if (!userId) {
     console.log("UserId param not sent with request");
@@ -19,11 +17,13 @@ const accessChat = asyncHandler(async (req, res) => {
       { users: { $elemMatch: { $eq: req.user._id } } },
       { users: { $elemMatch: { $eq: userId } } },
     ],
-  }).populate("users", "-password").populate("latestMessage");
-  
+  })
+    .populate("users", "-password")
+    .populate("latestMessage");
+
   isChat = await User.populate(isChat, {
     path: "latestMessage.sender",
-    select: "userName pic email",
+    select: "name pic email",
   });
 
   if (isChat.length > 0) {
@@ -74,7 +74,7 @@ const createGroupChat = asyncHandler(async (req, res) => {
     return res.status(400).send({ message: "Please Fill all the feilds" });
   }
 
-  var users = JSON.parse(req.body.users); //because data in form of string
+  var users = JSON.parse(req.body.users);
 
   if (users.length < 2) {
     return res

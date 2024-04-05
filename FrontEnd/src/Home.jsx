@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import Login from "./componant/Login";
 import SidePage from "./componant/SidePage";
 import Registration from "./componant/Registration";
+import { useNavigate } from "react-router-dom";
+
 
 const Home=()=>{
+  const navigate=useNavigate()
+  useEffect(()=>{
+    const user=JSON.parse(localStorage.getItem("userInfo"));
+    if(user){
+      navigate("/chats");
+    }
+  },[navigate])
     return(
         <>
           <div className=" container-fluid mainCon">

@@ -69,7 +69,7 @@ const authUser=asyncHandler(async(req,res)=>{
     if(user && (await user.comparePassword(password))){
         res.json({
             _id:user._id,
-            name: user.name,
+            userName: user.userName,
             email: user.email,
             pic: user.pic,
             token: generateToken(user._id),

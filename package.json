@@ -6,7 +6,6 @@
   "scripts": {
     "start": "nodemon ./backend/server.js",
     "server": "nodemon backend/server.js",
-    "build": "npm install --legacy-peer-deps && npm install --legacy-peer-deps --prefix FrontEnd && npm run build --prefix FrontEnd"
   },
   "author": "Kishan Rana",
   "license": "ISC",
